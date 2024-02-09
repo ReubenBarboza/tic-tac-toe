@@ -1,0 +1,32 @@
+body {
+  display: flex;
+  justify-content: center;
+}
+
+section {
+  position: absolute;
+  top: 0;
+}
+
+.container {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 150px;
+}
+
+.container .cell {
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.container .cell.filled {
+  cursor: not-allowed;
+}
+
+#lineCanvas {
+  position: absolute;
+  z-index: -1;
+}
