@@ -8,16 +8,14 @@ let container = document.querySelector(".container");
 container.addEventListener("click", function (e) {
   if (e.target.className === "cell" && !e.target.classList.contains("filled")) {
     if (player1) {
-      e.target.innerHTML = "&cross;";
       player1 = false;
       player2 = true;
-      turnText.innerHTML = "It is O's turn";
+      turnText.innerHTML = "It is O's turn.";
       e.target.classList.add("filled", "cross");
     } else if (player2) {
-      e.target.innerHTML = "O";
       player1 = true;
       player2 = false;
-      turnText.innerHTML = "It is X's turn";
+      turnText.innerHTML = "It is X's turn.";
       e.target.classList.add("filled", "circle");
     }
   }
@@ -28,10 +26,10 @@ container.addEventListener("click", function (e) {
 function handleGameValidation(clickedElement) {
   const data = handleCorners() || handleMiddle() || handleAsideMiddle();
   if (data?.victor === "X") {
-    turnText.innerHTML = "X wins";
+    turnText.innerHTML = "X wins!";
     container.style.pointerEvents = "none";
   } else if (data?.victor === "O") {
-    turnText.innerHTML = "O wins";
+    turnText.innerHTML = "O wins!";
     container.style.pointerEvents = "none";
   }
 
@@ -39,12 +37,9 @@ function handleGameValidation(clickedElement) {
     drawLine(data);
   }
 
-  if (document.querySelectorAll(".filled").length === 9 && !victor) {
-    turnText.innerHTML = "Tie";
+  if (document.querySelectorAll(".filled").length === 9 && !data?.victor) {
+    turnText.innerHTML = "Tie!";
   }
-
-  console.log(clickedElement, data?.victor, data?.lineArray);
-  // if (data?.lineArray);
 }
 
 function handleCorners() {
@@ -124,10 +119,6 @@ function handleAsideMiddle() {
 }
 
 function drawLine(data) {
-  // data.lineArray.forEach((cell) => {
-  //   const victoryCell = document.getElementById(cell);
-  //   victory;
-  // });
   const firstElement = document
     .getElementById(data.lineArray.sort()[0])
     .getBoundingClientRect();
@@ -142,27 +133,37 @@ function drawLine(data) {
 
   console.log(firstElement, lastElement, container);
 
-  // const line = document.createElement("div");
-  // line.style.position = "absolute";
-  // line.style.width = "100%";
-  // line.style.height = "3px";
-  // line.style.backgroundColor = "red";
-  // document.querySelector(".container").appendChild(line);
   const lineCanvas = document.getElementById("lineCanvas");
   lineCanvas.style.zIndex = 100;
   var ctx = lineCanvas.getContext("2d");
-  // ctx.moveTo(firstElement.x, firstElement.y);
-  // ctx.lineTo(lastElement.right, lastElement.bottom);
+
   ctx.moveTo(
     firstElement.x - container.x + firstElement.width / 2,
     firstElement.y - container.y + firstElement.height / 2
   );
-  ctx.strokeStyle = "red";
-  ctx.lineWidth = "3.0";
+  ctx.strokeStyle = "#702F00";
+  ctx.lineWidth = "5.0";
 
   ctx.lineTo(
     lastElement.x - container.x + lastElement.width / 2,
     lastElement.y - container.y + lastElement.height / 2
   );
   ctx.stroke();
+
+  playAgain(ctx);
+}
+
+function playAgain(ctx) {
+  document.querySelector(".play-again").addEventListener("click", function () {
+    let cells = document.querySelectorAll(".cell");
+    cells.forEach((cell) => {
+      cell.className = "cell";
+    });
+    container.style.pointerEvents = "auto";
+    lineCanvas.style.zIndex = -10;
+    ctx.reset();
+    player1 = true;
+    player2 = false;
+    turnText.innerHTML = "It is X's turn.";
+  });
 }

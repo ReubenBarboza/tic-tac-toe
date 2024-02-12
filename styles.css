@@ -1,25 +1,74 @@
+*,
+*::after,
+*::before {
+  margin: 0px;
+  padding: 0px;
+}
+
 body {
   display: flex;
   justify-content: center;
 }
 
 section {
-  position: absolute;
-  top: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+section h1 {
+  margin-bottom: 10px;
+  color: chocolate;
+  font-size: 2rem;
+}
+
+.turn-text {
+  color: chocolate;
+  margin-top: 10px;
+  font-size: 1.5rem;
 }
 
 .container {
   position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  width: 150px;
+  width: 300px;
 }
 
 .container .cell {
-  width: 50px;
-  height: 50px;
-  border: 1px solid black;
+  width: 100px;
+  height: 100px;
+  border: 2px solid chocolate;
   cursor: pointer;
+  border-bottom: none;
+}
+
+.container .cell.cross {
+  background-image: url("./x-solid.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.container .cell.circle {
+  background-image: url("./o-solid.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.container .cell:nth-child(2),
+.container .cell:nth-child(5),
+.container .cell:nth-child(8) {
+  border-left: none;
+  border-right: none;
+}
+
+.container .cell:nth-child(7),
+.container .cell:nth-child(8),
+.container .cell:nth-child(9) {
+  border-bottom: 2px solid chocolate;
 }
 
 .container .cell.filled {
@@ -29,4 +78,24 @@ section {
 #lineCanvas {
   position: absolute;
   z-index: -1;
+}
+
+.play-again {
+  background-color: chocolate;
+  color: bisque;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.play-again:hover {
+  background-color: brown;
+}
+
+.bottomContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 }
